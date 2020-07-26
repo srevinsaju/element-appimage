@@ -6,6 +6,8 @@
 name: Continuous
 
 on:
+  schedule:
+    - cron: "5 */12 * * *"
   push:
     branches: [master]
   pull_request:
