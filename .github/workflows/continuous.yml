@@ -1,0 +1,72 @@
+# Sugar Build System
+# (c) Srevin Saju 2020. All rights reserved 
+# Licensed under MIT License
+# Continuous Integration to release configured AppImages for Element (Riot) desktop client
+
+name: Continuous
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+
+jobs:
+  linux:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Clone repository
+        run: |
+          git clone https://github.com/vector-im/riot-desktop
+          
+      - name: Configure Element
+        run: |
+          cd riot-desktop
+          yarn install
+          yarn add keytar
+          yarn add seshat
+          mkdir config && cd config
+          wget https://raw.githubusercontent.com/vector-im/riot-web/develop/config.sample.json
+          mv config.sample.json config.json && cd ..
+          yarn run fetch --importkey
+          yarn run fetch --cfgdir config
+          yarn run electron-builder -l appimage --publish never
+          ls dist
+          mkdir -p dist/appimage
+          mv dist/*.AppImage dist/appimage/.
+
+      - name: Upload Appimage
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: Element-continuous-x86_64.AppImage
+          path: 'riot-desktop/dist/appimage/'
+
+
+
+  Release:
+    needs: [linux]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [3.8]
+
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: Element-continuous-x86_64.AppImage
+
+    - name: Release
+      uses: marvinpinto/action-automatic-releases@latest
+      if: github.ref == 'refs/heads/master'
+      with:
+        automatic_release_tag: continuous
+        title: continuous
+        files: |
+          Element-continuous-x86_64.AppImage
+
+        repo_token: ${{ secrets.GITHUB_TOKEN }} 
