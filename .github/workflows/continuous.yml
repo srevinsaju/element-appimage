@@ -38,6 +38,9 @@ jobs:
           mv config.sample.json config.json && cd ..
           yarn run fetch --importkey
           yarn run fetch --cfgdir config
+          cp ../*.js src/.
+          cp ../patch.sh .
+          ./patch.sh
           yarn run electron-builder -l appimage --publish never
           ls dist
           mkdir -p dist/appimage
