@@ -31,7 +31,7 @@ jobs:
           cd riot-desktop
           yarn install
           yarn add keytar
-          yarn add seshat
+          yarn add seshat-node
           mkdir config && cd config
           wget https://raw.githubusercontent.com/vector-im/riot-web/develop/config.sample.json
           mv config.sample.json config.json && cd ..
