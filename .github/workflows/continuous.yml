@@ -24,7 +24,7 @@ jobs:
           node-version: 12
       - name: Clone repository
         run: |
-          sudo apt install sqlcipher
+          sudo apt install sqlcipher libsqlcipher-dev
           git clone https://github.com/vector-im/riot-desktop
           
       - name: Configure Element
