@@ -1,10 +1,11 @@
 const fs = require('fs');
 const os = require('os');
 console.log("Element AppImage Build")
+let pathToAppImage;
 if (process.env.APPIMAGE == null) {
-    const pathToAppImage = "element-desktop"
+    pathToAppImage = "element-desktop";
 } else {
-    const pathToAppImage = process.env.APPIMAGE;
+    pathToAppImage = process.env.APPIMAGE;
 };
 
 function getDesktopFile(path) {
@@ -33,7 +34,7 @@ exports.isAutoStartEnabled = function isAutoStartEnabled() {
 exports.enableAutoStart = function enableAutoStart() {
     fs.writeFile(
         `${os.homedir()}/.config/autostart/element.desktop`,
-        getDesktopFile(), 
+        getDesktopFile(pathToAppImage), 
         function (err) {
             if (err) return console.log(err);
             console.log('Autostart desktop file');
