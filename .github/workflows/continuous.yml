@@ -24,15 +24,14 @@ jobs:
           node-version: 12
       - name: Clone repository
         run: |
-          sudo apt install sqlcipher libsqlcipher-dev
+          sudo apt install sqlcipher libsqlcipher-dev libsecret-1-dev
           git clone https://github.com/vector-im/riot-desktop
           
       - name: Configure Element
         run: |
           cd riot-desktop
           yarn install
-          yarn add keytar
-          yarn add matrix-seshat
+          yarn run hak
           mkdir config && cd config
           wget https://raw.githubusercontent.com/vector-im/riot-web/develop/config.sample.json
           mv config.sample.json config.json && cd ..
