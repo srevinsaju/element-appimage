@@ -53,7 +53,7 @@ jobs:
           ./appimagetool-x86_64.AppImage --comp gzip squashfs-root -n
           rm -r ./appimagetool-x86_64.AppImage
           chmod +x *.AppImage
-          mv *.AppImage Element-${git describe --tags}-GLIBC-2.27.AppImage
+          mv *.AppImage Element-`git describe --tags`-GLIBC-2.27.AppImage
 
       - name: Upload Appimage
         uses: actions/upload-artifact@v1.0.0
