@@ -44,6 +44,16 @@ jobs:
           ls dist
           mkdir -p dist/appimage
           mv dist/*.AppImage dist/appimage/.
+          cd dist/appimage
+          ./*.AppImage --appimage-extract
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x ./appimagetool-x86_64.AppImage
+          rm Element*.AppImage
+          cp -L /usr/lib/x86_64-linux-gnu/libsqlcipher.so.0 squashfs-root/usr/lib/.
+          ./appimagetool-x86_64.AppImage --comp gzip squashfs-root -n
+          rm -r ./appimagetool-x86_64.AppImage
+          chmod +x *.AppImage
+          mv *.AppImage Element-${git describe --tags}-GLIBC-2.27.AppImage
 
       - name: Upload Appimage
         uses: actions/upload-artifact@v1.0.0
