@@ -54,6 +54,7 @@ jobs:
           rm -r ./appimagetool-x86_64.AppImage
           chmod +x *.AppImage
           mv *.AppImage Element-`git describe --tags`-GLIBC-2.27.AppImage
+          rm -rf squashfs-root
 
       - name: Upload Appimage
         uses: actions/upload-artifact@v1.0.0
@@ -62,9 +63,59 @@ jobs:
           path: 'riot-desktop/dist/appimage/'
 
 
+  old-linux:
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Clone repository
+        run: |
+          sudo apt install sqlcipher libsqlcipher-dev libsecret-1-dev
+          git clone https://github.com/vector-im/riot-desktop
+          
+      - name: Configure Element
+        run: |
+          cd riot-desktop
+          yarn install
+          yarn run hak
+          mkdir config && cd config
+          wget https://raw.githubusercontent.com/vector-im/riot-web/develop/config.sample.json
+          mv config.sample.json config.json && cd ..
+          yarn run fetch --importkey
+          yarn run fetch --cfgdir config
+          cp ../*.js src/.
+          cp ../patch.sh .
+          ./patch.sh
+          yarn run electron-builder -l appimage --publish never
+          ls dist
+          mkdir -p dist/appimage
+          mv dist/*.AppImage dist/appimage/.
+          cd dist/appimage
+          ./*.AppImage --appimage-extract
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x ./appimagetool-x86_64.AppImage
+          rm Element*.AppImage
+          cp -L /usr/lib/x86_64-linux-gnu/libsqlcipher.so.0 squashfs-root/usr/lib/.
+          ./appimagetool-x86_64.AppImage --comp gzip squashfs-root -n
+          rm -r ./appimagetool-x86_64.AppImage
+          chmod +x *.AppImage
+          mv *.AppImage Element-`git describe --tags`-GLIBC-2.17.AppImage
+          rm -rf squashfs-root
+
+      - name: Upload Appimage
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: Element-continuous-old-x86_64.AppImage
+          path: 'riot-desktop/dist/appimage/'
+
+
+
+
 
   Release:
-    needs: [linux]
+    needs: [old-linux, linux]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -75,6 +126,10 @@ jobs:
       with:
         name: Element-continuous-x86_64.AppImage
 
+    - uses: actions/download-artifact@v1
+      with:
+        name: Element-continuous-old-x86_64.AppImage
+
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest
       if: github.ref == 'refs/heads/master'
@@ -83,5 +138,7 @@ jobs:
         title: continuous
         files: |
           Element-continuous-x86_64.AppImage
+          Element-continuous-old-x86_64.AppImage
 
-        repo_token: ${{ secrets.GITHUB_TOKEN }} 
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+ 
