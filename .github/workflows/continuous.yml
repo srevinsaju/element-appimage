@@ -15,7 +15,7 @@ on:
 
 
 jobs:
-  linux:
+  centos:
     runs-on: ubuntu-18.04
     container:
       image: centos:7
@@ -48,7 +48,7 @@ jobs:
         run: |
           git clone https://github.com/sqlcipher/sqlcipher
           cd sqlcipher
-          git checkout 4.4.0
+          git checkout v4.4.0
           ./configure --prefix=/usr --enable-tempstore=yes \
                 CFLAGS="$CFLAGS -DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
           make
@@ -91,7 +91,7 @@ jobs:
           path: 'riot-desktop/dist/appimage/'
 
 
-  old-linux:
+  ubuntu-linux:
     runs-on: ubuntu-16.04
     steps:
       - uses: actions/checkout@v2
@@ -141,7 +141,7 @@ jobs:
 
 
   Release:
-    needs: [old-linux, linux]
+    needs: [ubuntu-linux, centos]
     runs-on: ubuntu-latest
     strategy:
       matrix:
