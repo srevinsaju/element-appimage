@@ -1,16 +1,18 @@
-sudo: true
 dist: trusty 
-language: node_js
-node_js:
-  - node
+
+language: rust
+rust:
+  - stable
+
 branches:
   only:
   - master
+
 git:
   depth: 3
 install:
+  - nvm install node
   - sudo apt-get -qq -y install sqlcipher libsqlcipher-dev libsecret-1-dev 
-  - rvm install 2.7.1
 
 script:
 - git clone https://github.com/vector-im/riot-desktop
