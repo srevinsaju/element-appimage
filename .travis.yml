@@ -1,0 +1,45 @@
+language: node_js
+branches:
+  only:
+  - master
+git:
+  depth: 3
+install:
+- sudo apt install sqlcipher libsqlcipher-dev libsecret-1-dev
+script:
+- git clone https://github.com/vector-im/riot-desktop
+- cd riot-desktop
+- yarn install
+- yarn run hak
+- mkdir config && cd config
+- wget https://raw.githubusercontent.com/vector-im/riot-web/develop/config.sample.json
+- mv config.sample.json config.json && cd ..
+- yarn run fetch --importkey
+- yarn run fetch --cfgdir config
+- cp ../*.js src/.
+- cp ../patch.sh .
+- "./patch.sh"
+- yarn run electron-builder -l appimage --publish never
+- ls dist
+- mkdir -p dist/appimage
+- mv dist/*.AppImage dist/appimage/.
+- cd dist/appimage
+- "./*.AppImage --appimage-extract"
+- wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+- chmod +x ./appimagetool-x86_64.AppImage
+- rm Element*.AppImage
+- cp -L /usr/lib/x86_64-linux-gnu/libsqlcipher.so.0 squashfs-root/usr/lib/.
+- "./appimagetool-x86_64.AppImage --comp gzip squashfs-root -n -u 'gh-releases-zsync|srevinsaju|element-appimage|latest|Element*.AppImage.zsync'"
+- rm -r ./appimagetool-x86_64.AppImage
+- chmod +x *.AppImage
+- mv *.AppImage Element-`git describe --tags`-GLIBC-2.17.AppImage
+- rm -rf squashfs-root
+deploy:
+  provider: releases
+  api_key:
+    secure: mBWW7FuVGoOLSLuAB/c4ssOmG+857KJQPUf7b56hZ2v3l6gYLHxOasSoq3aHlyBXQ+qz3D8e/2Z/YivmDvYQDTud5l+TVvMXXvsqVlTjZCXZ0WLmEVvLx0/30dSKNa/MmCWMBBtFxvcHP74TGxME2IUi8MeIdDaRrN718fcv50cmVLMbHNWUSWml+/bYVUB2Q7FlT/mVyJ9hhuT/SFjzwixrpy9gtxnoL3qFm0wwKKb8b+yk5K2KR4JVgZf95KNltwwJSwUbQUqZDE+jrdh3HHlYBvl4Ydce824cA2iJ/OeKZcqD1q7Ha2zyMnUtg167cBn9lQNWXcyT+AiptFiKEyCy7RvZ9NqwJp1N2MeVJGGn9x/ULO/HCbBL3Mim7HUpgZqo5BJzp/uRY7HM/UlMIXb0j2XuUoIOxMmALbOd1x2UqdPWkV/nw+hDCkUV/SxBGfByE1dTssBrErm9Mhg+Qk5kqHQzBC3pnbDiMt34dWwNvgQGOMu8RO3Bt41td2yzpqC4+LjgrglwJUoLfgSLHiEITQXuxhQ+Bb1ApMaVRLjEGavvtt3nu8ptoSTKyfaitigk+87xk3BtOTTvhyKtqk20UjrTbSLRBL3BtImwWP2N2ZN6W/RMfmtVR7iE+Ug8/3wLlxtkESTNUmySwZZeyVFy4QtXzPCe8HidjsqwsbE=
+  file_glob: true
+  file: riot-desktop/dist/appimage/*.AppImage
+  on:
+    repo: srevinsaju/element-appimage
+  skip_cleanup: 'true'
