@@ -1,14 +1,16 @@
 sudo: true
 dist: trusty 
 language: node_js
+node_js:
+  - node
 branches:
   only:
   - master
 git:
   depth: 3
 install:
-  - sudo apt update
   - sudo apt -y install sqlcipher libsqlcipher-dev libsecret-1-dev
+
 script:
 - git clone https://github.com/vector-im/riot-desktop
 - cd riot-desktop
