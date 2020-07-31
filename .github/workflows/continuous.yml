@@ -53,7 +53,7 @@ jobs:
           ./configure --prefix=/usr --enable-tempstore=yes \
                 CFLAGS="$CFLAGS -DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
           make
-          sudo make install --prefix=/usr
+          DESTDIR=/usr sudo make install
       
       - name: Clone Riot Desktop
         run: |
