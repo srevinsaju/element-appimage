@@ -10,6 +10,7 @@ git:
   depth: 3
 install:
   - sudo apt-get -qq -y install sqlcipher libsqlcipher-dev libsecret-1-dev cargo
+  - rvm install 2.7.1
 
 script:
 - git clone https://github.com/vector-im/riot-desktop
