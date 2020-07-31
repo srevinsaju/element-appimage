@@ -41,9 +41,11 @@ jobs:
           sudo yum -y install git openssl
 
       - name: Current Directory Structure
+        run: |
           ls 
 
       - name: Install SqlCipher
+        run: |
           git clone https://github.com/sqlcipher/sqlcipher --branch 4.4.0
           cd sqlcipher
           ./configure --prefix=/usr --enable-tempstore=yes \
