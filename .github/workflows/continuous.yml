@@ -58,7 +58,7 @@ jobs:
       - name: Clone Riot Desktop
         run: |
           git clone https://github.com/vector-im/riot-desktop
-          git describe --tags
+          cd riot-desktop && git describe --tags && cd ..
       
       - name: Set up Rust / cargo
         run: |
