@@ -187,6 +187,7 @@ jobs:
       with:
         automatic_release_tag: continuous
         title: continuous
+        prerelease: false
         files: |
           Element-continuous-x86_64.AppImage
           Element-continuous-old-x86_64.AppImage
