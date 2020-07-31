@@ -9,7 +9,7 @@ branches:
 git:
   depth: 3
 install:
-  - sudo apt -y install sqlcipher libsqlcipher-dev libsecret-1-dev
+  - sudo apt-get -qq -y install sqlcipher libsqlcipher-dev libsecret-1-dev
 
 script:
 - git clone https://github.com/vector-im/riot-desktop
