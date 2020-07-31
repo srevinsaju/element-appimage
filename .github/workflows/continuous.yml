@@ -39,9 +39,6 @@ jobs:
       - name: Install OpenSSL and Git
         run: |
           sudo yum -y install git openssl gcc-c++ make gcc openssl-devel tcl sqlite-devel libsecret libsecret-devel wget
-          sudo yum -y --enablerepo=extras install epel-release
-          sudo yum --enablerepo=epel -y install fuse-sshfs
-          sudo modprobe fuse
           sudo yum -y groupinstall "Development Tools"
 
       - name: Current Directory Structure
@@ -106,7 +103,7 @@ jobs:
           chmod +x ./appimagetool-x86_64.AppImage
           rm Element*.AppImage
           cp -L /usr/lib/libsqlcipher.so.0 squashfs-root/usr/lib/.
-          ./appimagetool-x86_64.AppImage --comp gzip squashfs-root -n
+          ./appimagetool-x86_64.AppImage --appimage-extract-and-run --comp gzip squashfs-root -n
           rm -r ./appimagetool-x86_64.AppImage
           chmod +x *.AppImage
           mv *.AppImage Element-`git describe --tags`-GLIBC-2.27.AppImage
