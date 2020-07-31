@@ -41,7 +41,6 @@ jobs:
           sudo yum -y install git openssl gcc-c++ make gcc openssl-devel tcl sqlite-devel libsecret libsecret-devel wget
           yum -y --enablerepo=extras install epel-release
           sudo yum --enablerepo=epel -y install fuse-sshfs
-          usermod -a -G fuse "$(whoami)" 
           sudo yum -y groupinstall "Development Tools"
 
       - name: Current Directory Structure
