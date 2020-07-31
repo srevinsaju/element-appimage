@@ -47,7 +47,7 @@ deploy:
   api_key:
     secure: mBWW7FuVGoOLSLuAB/c4ssOmG+857KJQPUf7b56hZ2v3l6gYLHxOasSoq3aHlyBXQ+qz3D8e/2Z/YivmDvYQDTud5l+TVvMXXvsqVlTjZCXZ0WLmEVvLx0/30dSKNa/MmCWMBBtFxvcHP74TGxME2IUi8MeIdDaRrN718fcv50cmVLMbHNWUSWml+/bYVUB2Q7FlT/mVyJ9hhuT/SFjzwixrpy9gtxnoL3qFm0wwKKb8b+yk5K2KR4JVgZf95KNltwwJSwUbQUqZDE+jrdh3HHlYBvl4Ydce824cA2iJ/OeKZcqD1q7Ha2zyMnUtg167cBn9lQNWXcyT+AiptFiKEyCy7RvZ9NqwJp1N2MeVJGGn9x/ULO/HCbBL3Mim7HUpgZqo5BJzp/uRY7HM/UlMIXb0j2XuUoIOxMmALbOd1x2UqdPWkV/nw+hDCkUV/SxBGfByE1dTssBrErm9Mhg+Qk5kqHQzBC3pnbDiMt34dWwNvgQGOMu8RO3Bt41td2yzpqC4+LjgrglwJUoLfgSLHiEITQXuxhQ+Bb1ApMaVRLjEGavvtt3nu8ptoSTKyfaitigk+87xk3BtOTTvhyKtqk20UjrTbSLRBL3BtImwWP2N2ZN6W/RMfmtVR7iE+Ug8/3wLlxtkESTNUmySwZZeyVFy4QtXzPCe8HidjsqwsbE=
   file_glob: true
-  file: riot-desktop/dist/appimage/*.AppImage
+  file: /home/travis/build/srevinsaju/element-appimage/riot-desktop/dist/appimage/*.AppImage
   on:
     repo: srevinsaju/element-appimage
   skip_cleanup: 'true'
