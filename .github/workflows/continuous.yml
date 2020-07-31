@@ -81,6 +81,7 @@ jobs:
 
       - name: Configure Element
         run: |
+          source $HOME/.cargo/env
           cd riot-desktop
           yarn install
           yarn run hak
