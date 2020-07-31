@@ -38,7 +38,7 @@ jobs:
 
       - name: Install OpenSSL and Git
         run: |
-          sudo yum -y install git openssl gcc-c++ make gcc openssl-devel
+          sudo yum -y install git openssl gcc-c++ make gcc openssl-devel tclsh
           sudo yum -y groupinstall "Development Tools"
 
       - name: Current Directory Structure
