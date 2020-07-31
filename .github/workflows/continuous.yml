@@ -46,8 +46,9 @@ jobs:
 
       - name: Install SqlCipher
         run: |
-          git clone https://github.com/sqlcipher/sqlcipher --branch 4.4.0
+          git clone https://github.com/sqlcipher/sqlcipher
           cd sqlcipher
+          git checkout 4.4.0
           ./configure --prefix=/usr --enable-tempstore=yes \
                 CFLAGS="$CFLAGS -DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
           make
