@@ -38,7 +38,7 @@ jobs:
 
       - name: Install OpenSSL and Git
         run: |
-          sudo yum -y install git openssl
+          sudo yum -y install git openssl gcc-c++ make
 
       - name: Current Directory Structure
         run: |
@@ -53,8 +53,19 @@ jobs:
                 CFLAGS="$CFLAGS -DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
           make
           sudo make install --prefix=/usr
+      
+      - name: Clone Riot Desktop
+        run: |
           git clone https://github.com/vector-im/riot-desktop
-          
+          git describe --tags
+      
+      - name: Set up Rust / cargo
+        run: |
+          curl https://sh.rustup.rs -sSf | sh -s -- -y -q
+          export PATH=$PATH:$HOME/.cargo/bin
+          cargo --version
+          rustc --version
+
       - name: Configure Element
         run: |
           cd riot-desktop
