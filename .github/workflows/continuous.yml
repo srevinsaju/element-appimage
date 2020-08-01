@@ -106,7 +106,7 @@ jobs:
           ./appimagetool-x86_64.AppImage --appimage-extract-and-run --comp gzip squashfs-root -n
           rm -r ./appimagetool-x86_64.AppImage
           chmod +x *.AppImage
-          mv *.AppImage Element-`git describe --tags`-GLIBC-2.27.AppImage
+          mv *.AppImage Element-`git describe --tags`-GLIBC-2.17.AppImage
           rm -rf squashfs-root
 
       - name: Upload Appimage
@@ -154,7 +154,7 @@ jobs:
           ./appimagetool-x86_64.AppImage --comp gzip squashfs-root -n -u 'gh-releases-zsync|srevinsaju|element-appimage|latest|Element*.AppImage.zsync'
           rm -r ./appimagetool-x86_64.AppImage
           chmod +x *.AppImage
-          mv *.AppImage Element-`git describe --tags`-GLIBC-2.17.AppImage
+          mv *.AppImage Element-`git describe --tags`-GLIBC-2.27.AppImage
           rm -rf squashfs-root
 
       - name: Upload Appimage
