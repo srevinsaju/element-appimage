@@ -103,6 +103,9 @@ jobs:
           chmod +x ./appimagetool-x86_64.AppImage
           rm Element*.AppImage
           cp -L /usr/lib/libsqlcipher.so.0 squashfs-root/usr/lib/.
+          cp -L /lib64/libcrypto.so.10 squashfs-root/usr/lib/.
+          cp -L /lib64/libssl3.so squashfs-root/usr/lib/.
+          cp -L /lib64/libssl.so.10 squashfs-root/usr/lib/.
           ./appimagetool-x86_64.AppImage --appimage-extract-and-run --comp gzip squashfs-root -n
           rm -r ./appimagetool-x86_64.AppImage
           chmod +x *.AppImage
