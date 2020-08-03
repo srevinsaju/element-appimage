@@ -69,8 +69,8 @@ jobs:
       - name: Clone Riot Desktop
         run: |
           git clone https://github.com/vector-im/element-desktop
-          cd riot-desktop && git checkout `curl --silent -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/vector-im/element-desktop/releases/latest | jq  -r '.tag_name'` && cd ..
-          cd riot-desktop && git describe --tags && cd ..
+          cd element-desktop && git checkout `curl --silent -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/vector-im/element-desktop/releases/latest | jq  -r '.tag_name'` && cd ..
+          cd element-desktop && git describe --tags && cd ..
       
       - name: Set up Rust / cargo
         run: |
@@ -83,7 +83,7 @@ jobs:
       - name: Configure Element
         run: |
           source $HOME/.cargo/env
-          cd riot-desktop
+          cd element-desktop
           yarn install
           yarn run hak
           mkdir config && cd config
@@ -117,7 +117,7 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: Element-stable-x86_64.AppImage
-          path: 'riot-desktop/dist/appimage/'
+          path: 'element-desktop/dist/appimage/'
 
 
   Release:
