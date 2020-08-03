@@ -189,7 +189,7 @@ jobs:
       if: github.ref == 'refs/heads/master'
       with:
         automatic_release_tag: continuous
-        title: continuous
+        title: Beta AppImage Release
         prerelease: false
         files: |
           Element-continuous-x86_64.AppImage
