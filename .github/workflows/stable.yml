@@ -69,7 +69,7 @@ jobs:
       - name: Clone Riot Desktop
         run: |
           git clone https://github.com/vector-im/riot-desktop
-          git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+          cd riot-desktop && git checkout $(git describe --tags `git rev-list --tags --max-count=1`) && cd ..
           cd riot-desktop && git describe --tags && cd ..
       
       - name: Set up Rust / cargo
