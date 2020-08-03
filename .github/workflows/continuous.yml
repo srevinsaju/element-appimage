@@ -68,7 +68,7 @@ jobs:
 
       - name: Clone Riot Desktop
         run: |
-          git clone https://github.com/vector-im/riot-desktop
+          git clone https://github.com/vector-im/element-desktop
           cd riot-desktop && git describe --tags && cd ..
       
       - name: Set up Rust / cargo
@@ -86,7 +86,7 @@ jobs:
           yarn install
           yarn run hak
           mkdir config && cd config
-          wget https://raw.githubusercontent.com/vector-im/riot-web/develop/config.sample.json
+          wget https://raw.githubusercontent.com/vector-im/element-web/develop/config.sample.json
           mv config.sample.json config.json && cd ..
           yarn run fetch --importkey
           yarn run fetch --cfgdir config
