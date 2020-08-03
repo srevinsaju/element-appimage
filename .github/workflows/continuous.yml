@@ -1,4 +1,3 @@
-# Sugar Build System
 # (c) Srevin Saju 2020. All rights reserved 
 # Licensed under MIT License
 # Continuous Integration to release configured AppImages for Element (Riot) desktop client
@@ -69,7 +68,7 @@ jobs:
       - name: Clone Riot Desktop
         run: |
           git clone https://github.com/vector-im/element-desktop
-          cd riot-desktop && git describe --tags && cd ..
+          cd element-desktop && git describe --tags && cd ..
       
       - name: Set up Rust / cargo
         run: |
@@ -82,7 +81,7 @@ jobs:
       - name: Configure Element
         run: |
           source $HOME/.cargo/env
-          cd riot-desktop
+          cd element-desktop
           yarn install
           yarn run hak
           mkdir config && cd config
@@ -116,7 +115,7 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: Element-continuous-x86_64.AppImage
-          path: 'riot-desktop/dist/appimage/'
+          path: 'element-desktop/dist/appimage/'
 
   Release:
     needs: [centos]
