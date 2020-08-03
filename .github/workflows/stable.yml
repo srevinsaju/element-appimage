@@ -40,6 +40,8 @@ jobs:
         run: |
           sudo yum -y install git openssl gcc-c++ make gcc openssl-devel tcl sqlite-devel libsecret libsecret-devel wget
           sudo yum -y groupinstall "Development Tools"
+          sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+          sudo yum install jq -y
 
       - name: Current Directory Structure
         run: |
