@@ -131,7 +131,7 @@ jobs:
         run: |
           sudo apt install sqlcipher libsqlcipher-dev libsecret-1-dev
           git clone https://github.com/vector-im/riot-desktop
-          git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+          cd riot-desktop && git checkout $(git describe --tags `git rev-list --tags --max-count=1`) && cd ..
           
       - name: Configure Element
         run: |
