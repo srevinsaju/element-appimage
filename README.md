@@ -1,7 +1,12 @@
-# element-desktop (AppImages)
+<h1 align="center">
+	<img src="https://raw.githubusercontent.com/vector-im/element-desktop/develop/res/img/element.png" alt="Element" height=200 width=200 align="middle">
+	Element AppImage
+</h1>
+
+A glossy Matrix collaboration client for desktop.
 
 Continuous Integration to create preconfigured AppImages of the Element
-Matrix desktop client. 
+Matrix desktop client. [Featured AppImages](https://matrix.org/blog/2020/08/07/this-week-in-matrix-2020-08-07#new-appimage-for-the-element-desktop-matrix-client) ([almost](https://github.com/vector-im/element-web/issues/4766) official :smile:)
 
 ## Getting Started
 * Go to [Releases](https://github.com/srevinsaju/element-appimage/releases)
