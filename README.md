@@ -39,7 +39,7 @@ cd squashfs-root
 
 ## License 
 Element Desktop is licensed under the Apache License 2.0. 
-The continuous integration (.github/workflows/continuous.yml) is licensed under
+The continuous integration (`.github/workflows/continuous.yml`) is licensed under
 MIT License. Unless explicitly mentioned, all others are licensed under Apache License 2.0 
 or the corresponding license as defined by New Vector
 
