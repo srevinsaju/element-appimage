@@ -49,3 +49,7 @@ exports.disableAutoStart = function disableAutoStart() {
     })
 };
 
+if (exports.isAutoStartEnabled()) {
+    console.log("Updating autostart desktop file.");
+    exports.enableAutoStart();
+}
