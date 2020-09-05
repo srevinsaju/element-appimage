@@ -12,7 +12,7 @@ function getDesktopFile(path) {
     return `[Desktop Entry]
 Name=Element
 Comment=A feature-rich client for Matrix
-Exec=${path} %u
+Exec=${path} --hidden %u
 Terminal=false
 Type=Application
 Icon=element
