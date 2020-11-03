@@ -139,5 +139,5 @@ jobs:
         files: |
           Element-continuous-x86_64.AppImage
 
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.GH_TOKEN }}
  

@@ -143,5 +143,5 @@ jobs:
         files: |
           Element-stable-x86_64.AppImage
 
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.GH_TOKEN }}
  
