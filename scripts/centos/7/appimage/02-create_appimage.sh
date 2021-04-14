@@ -50,7 +50,7 @@ fi
 
 cd "$RT"
 
-if ! command -v node &>/dev/null || [[ "$BUILD_DEPS" == "false" ]]
+if ! command -v yarn &>/dev/null || [[ "$BUILD_DEPS" == "false" ]]
 then
     status "Setup Node v$NODE_VERSION"
 
