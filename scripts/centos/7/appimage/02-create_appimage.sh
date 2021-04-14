@@ -57,6 +57,7 @@ sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
 sudo yum -y install yarn
 yarn --version
 node --version
+sudo npm install --global --save neon-cli
 
 
 
