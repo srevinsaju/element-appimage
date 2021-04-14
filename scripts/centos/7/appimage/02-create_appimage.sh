@@ -50,18 +50,14 @@ fi
 
 cd "$RT"
 
-if ! command -v yarn &>/dev/null || [[ "$BUILD_DEPS" == "false" ]]
-then
-    status "Setup Node v$NODE_VERSION"
+curl --silent --location https://rpm.nodesource.com/setup_$NODE_VERSION | sudo bash -
+sudo yum -y install nodejs
+curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+sudo yum -y install yarn
+yarn --version
+node --version
 
-    curl --silent --location https://rpm.nodesource.com/setup_$NODE_VERSION | sudo bash -
-    sudo yum -y install nodejs
-    curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-    sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
-    sudo yum -y install yarn
-    yarn --version
-    node --version
-fi
 
 
 cd "$RT"
