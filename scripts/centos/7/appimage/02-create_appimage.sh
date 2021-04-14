@@ -42,7 +42,7 @@ then
     cd sqlcipher
     git checkout "v$SQLCIPHER_VERSION"
     ./configure --prefix=/usr --enable-tempstore=yes \
-        CFLAGS="$CFLAGS -DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
+        CFLAGS="-DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
     make
     DESTDIR=/usr sudo make install
 fi
