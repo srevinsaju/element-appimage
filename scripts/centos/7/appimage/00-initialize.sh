@@ -1,5 +1,6 @@
 #!/bin/bash
-set -eux 
+set -eux
+
 
 yum -y install sudo
 useradd github
@@ -10,4 +11,5 @@ su - github
 
 sudo yum -y update
 sudo yum -y install git openssl gcc-c++ make gcc openssl-devel tcl sqlite-devel libsecret libsecret-devel wget
+sudo yum -y install python3
 sudo yum -y groupinstall "Development Tools"
