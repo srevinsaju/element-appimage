@@ -62,15 +62,14 @@ node --version
 
 cd "$RT"
 
-if ! command -v cargo &>/dev/null && [[ "$BUILD_DEPS" == "false" ]]
-then
-    status "Setting up Rust"
-    curl https://sh.rustup.rs -sSf | sh -s -- -y -q
-    export PATH=$PATH:$HOME/.cargo/bin
-    cargo --version
-    rustc --version
-    source $HOME/.cargo/env
-fi
+
+status "Setting up Rust"
+curl https://sh.rustup.rs -sSf | sh -s -- -y -q
+export PATH=$PATH:$HOME/.cargo/bin
+cargo --version
+rustc --version
+source $HOME/.cargo/env
+
 
 
 cd "$RT/_build"
