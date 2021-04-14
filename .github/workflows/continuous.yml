@@ -33,7 +33,7 @@ jobs:
 
       - name: Install SqlCipher
         run: |
-          bash -ex ./scripts/centos/7/appimage/03*.sh
+          bash -ex ./scripts/centos/7/appimage/02*.sh
 
       - name: Upload Appimage
         uses: actions/upload-artifact@v1
