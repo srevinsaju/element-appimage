@@ -33,19 +33,19 @@ export RT="$PWD"
 
 cd "$RT/_deps"
 
-if ! command -v sqlcipher &> /dev/null || [[ "$BUILD_DEPS" == "false" ]]
-then
-    status "Setting up sqlcipher"
-
-    # clone the source code of sqlcipher
-    git clone https://github.com/sqlcipher/sqlcipher
-    cd sqlcipher
-    git checkout "v$SQLCIPHER_VERSION"
-    ./configure --prefix=/usr --enable-tempstore=yes \
-        CFLAGS="-DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
-    make
-    DESTDIR=/usr sudo make install
-fi
+#if ! command -v sqlcipher &> /dev/null || [[ "$BUILD_DEPS" == "false" ]]
+#then
+#    status "Setting up sqlcipher"
+#
+#    # clone the source code of sqlcipher
+#    git clone https://github.com/sqlcipher/sqlcipher
+#    cd sqlcipher
+#    git checkout "v$SQLCIPHER_VERSION"
+#    ./configure --prefix=/usr --enable-tempstore=yes \
+#        CFLAGS="-DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
+#    make
+#    DESTDIR=/usr sudo make install
+#fi
 
 
 cd "$RT"
