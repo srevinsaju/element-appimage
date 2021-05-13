@@ -98,6 +98,7 @@ yarn run docker:build
 ls dist
 
 mkdir -p $RT/_dist/.
+sudo chmod o+rwx dist/*.AppImage
 mv dist/*.AppImage $RT/_dist/.
 cd $RT/_dist/.
 
