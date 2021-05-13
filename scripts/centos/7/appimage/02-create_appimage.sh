@@ -85,14 +85,15 @@ yarn install
 sed -i 's,docker run --rm -ti,docker run --rm,g' scripts/in-docker.sh
 yarn run fetch --noverify --cfgdir ''
 yarn run docker:setup
+
+cp $RT/*.js src/.
+cp $RT/patch.sh .
+./patch.sh
+
 yarn run docker:install < /dev/null
 yarn run docker:build:native
 yarn run docker:build
 
-cp ../*.js src/.
-cp ../patch.sh .
-./patch.sh
-yarn run electron-builder -l appimage --publish never
 ls dist
 
 mv dist/*.AppImage $RT/_dist/.
