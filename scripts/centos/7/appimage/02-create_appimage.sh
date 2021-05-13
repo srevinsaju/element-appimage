@@ -99,13 +99,15 @@ ls dist
 
 mkdir -p $RT/_dist/.
 sudo chmod o+rwx dist/*.AppImage
-mv dist/*.AppImage $RT/_dist/.
+sudo mv dist/*.AppImage $RT/_dist/.
+sudo chown `whoami`:`whoami` $RT/_dist/*.AppImage
 cd $RT/_dist/.
 
 ./*.AppImage --appimage-extract
 wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 chmod +x ./appimagetool-x86_64.AppImage
-rm Element*.AppImage
+sudo rm -rf Element*.AppImage
+
 cp -L /usr/lib/libsqlcipher.so.0 squashfs-root/usr/lib/.
 cp -L /lib64/libcrypto.so.10 squashfs-root/usr/lib/.
 cp -L /lib64/libssl3.so squashfs-root/usr/lib/.
