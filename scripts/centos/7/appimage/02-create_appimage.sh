@@ -82,9 +82,10 @@ cd element-desktop
 git describe --tags
 yarn install
 
+sed -i 's,docker run --rm -ti,docker run --rm,g' scripts/in-docker.sh
 yarn run fetch --noverify --cfgdir ''
 yarn run docker:setup
-yarn run docker:install
+yarn run docker:install < /dev/null
 yarn run docker:build:native
 yarn run docker:build
 
