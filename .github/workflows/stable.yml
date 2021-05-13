@@ -22,8 +22,9 @@ jobs:
         with:
           node-version: 14
 
-      - name: Install SqlCipher
+      - name: Build element
         run: |
+          export BUILD_TYPE="stable"
           bash -ex ./scripts/centos/7/appimage/02*.sh
 
       - name: Upload Appimage
