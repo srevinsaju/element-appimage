@@ -3,7 +3,7 @@
 set -eux 
 
 
-export NODE_VERSION="14.x"
+export NODE_VERSION="16.x"
 export SQLCIPHER_VERSION="4.4.3"
 export APPIMAGE_EXTRACT_AND_RUN=1
 
@@ -58,7 +58,7 @@ sudo yum -y install yarn
 yarn --version
 node --version
 sudo yarn global add neon-cli
-
+neon version
 
 
 cd "$RT"
@@ -83,8 +83,10 @@ git describe --tags
 yarn install
 
 yarn run fetch --noverify --cfgdir ''
-yarn run build:native
-yarn run build
+yarn run docker:setup
+yarn run docker:install
+yarn run docker:build:native
+yarn run docker:build
 
 cp ../*.js src/.
 cp ../patch.sh .

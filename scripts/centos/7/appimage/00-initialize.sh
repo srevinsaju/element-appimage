@@ -11,5 +11,5 @@ su - github
 
 sudo yum -y update
 sudo yum -y install git openssl gcc-c++ make gcc openssl-devel tcl sqlite-devel libsecret libsecret-devel wget
-sudo yum -y install python3
+sudo yum -y install python3 python2 python2-dev
 sudo yum -y groupinstall "Development Tools"
