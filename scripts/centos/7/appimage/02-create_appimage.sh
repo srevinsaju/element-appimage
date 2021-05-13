@@ -97,6 +97,7 @@ yarn run docker:build
 
 ls dist
 
+mkdir -p $RT/_dist/.
 mv dist/*.AppImage $RT/_dist/.
 cd $RT/_dist/.
 
