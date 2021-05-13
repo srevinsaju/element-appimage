@@ -3,7 +3,7 @@
 set -eux 
 
 
-export NODE_VERSION="15.x"
+export NODE_VERSION="14.x"
 export SQLCIPHER_VERSION="4.4.3"
 export APPIMAGE_EXTRACT_AND_RUN=1
 
