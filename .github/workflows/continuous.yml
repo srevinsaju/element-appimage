@@ -16,20 +16,8 @@ on:
 jobs:
   centos:
     runs-on: ubuntu-latest
-    container:
-      image: centos:7
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 16
-      - name: Setup user github 
-        run: |
-          bash -ex ./scripts/centos/7/appimage/00*.sh
-
-      - name: Current Directory Structure
-        run: |
-          bash -ex ./scripts/centos/7/appimage/01*.sh
 
       - name: Install SqlCipher
         run: |
