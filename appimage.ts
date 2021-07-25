@@ -1,7 +1,7 @@
 
 import os from 'os';
 import fs from 'fs';
-import process from 'process';
+// import process from 'process';
 
 console.log("Element AppImage Build")
 let pathToAppImage;
