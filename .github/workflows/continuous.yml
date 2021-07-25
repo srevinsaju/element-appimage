@@ -8,14 +8,17 @@ on:
   schedule:
     - cron: "5 */12 * * *"
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 
 jobs:
-  centos:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build_type: ['stable', 'develop']
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -24,34 +27,29 @@ jobs:
 
       - name: Build Element
         run: |
-          export BUILD_TYPE="develop"
+          export BUILD_TYPE="${{ matrix.build_type }}"
           bash -ex ./scripts/centos/7/appimage/02*.sh
 
       - name: Upload Appimage
         uses: actions/upload-artifact@v1
         with:
-          name: element-continuous
+          name: element-${{ matrix.build_type }}
           path: '_dist'
 
-  Release:
-    needs: [centos]
+  release:
     runs-on: ubuntu-latest
-
+    needs: [build]
     steps:
-    - uses: actions/download-artifact@v1
-      with:
-        name: element-continuous
+      - name: download actions
+        uses: actions/download-artifact@v2
 
-
-    - name: Release
-      uses: marvinpinto/action-automatic-releases@latest
-      if: github.ref == 'refs/heads/master'
-      with:
-        automatic_release_tag: continuous
-        title: Beta AppImage Release
-        prerelease: false
-        files: |
-          element-continuous
-
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
- 
+      - name: Show releases
+        run: ls -alHR
+      
+      - name: Create release and upload artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          wget https://github.com/TheAssassin/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage
+          chmod +x pyuploadtool-x86_64.AppImage
+          ./pyuploadtool-x86_64.AppImage element-*/*
