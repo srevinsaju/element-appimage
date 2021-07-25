@@ -19,6 +19,12 @@ Matrix desktop client. [Featured AppImages](https://matrix.org/blog/2020/08/07/t
 * Go to [Releases](https://github.com/srevinsaju/element-appimage/releases)
 * Download the latest the Element-x.x.x.AppImage. 
 
+or, use [`zap`](https://github.com/srevinsaju/zap), the command line AppImage package manager:
+```bash
+zap install --github --from=srevinsaju/element-appimage element-appimage
+```
+
+
 ### Executing
 #### File Manager
 Just double click the `*.AppImage` file and you are done!
