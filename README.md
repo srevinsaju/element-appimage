@@ -1,9 +1,16 @@
-<h1 align="center">
-	<img src="https://raw.githubusercontent.com/vector-im/element-desktop/develop/res/img/element.png" alt="Element" height=200 width=200 align="middle">
-	Element AppImage
-</h1>
+<p align="center">
+    <img src="https://raw.githubusercontent.com/vector-im/element-desktop/develop/res/img/element.png" alt="Element logo" width=128 height=128>
 
-A glossy Matrix collaboration client for desktop.
+<h2 align="center">Element AppImage</h2>
+
+  <p align="center">
+    A glossy Matrix collaboration client for desktop, now portable!
+    <br>
+    <a href="https://github.com/srevinsaju/element-appimage/issues/new">Report bug</a>
+    ·
+    <a href="https://github.com/srevinsaju/element-appimage/issues/new">Request feature</a>
+  </p>
+</p>
 
 Continuous Integration to create preconfigured AppImages of the Element
 Matrix desktop client. [Featured AppImages](https://matrix.org/blog/2020/08/07/this-week-in-matrix-2020-08-07#new-appimage-for-the-element-desktop-matrix-client) ([almost](https://github.com/vector-im/element-web/issues/4766) official :smile:)
