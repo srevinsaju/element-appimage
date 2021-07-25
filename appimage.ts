@@ -1,5 +1,8 @@
-const fs = require('fs');
-const os = require('os');
+
+import os from 'os';
+import fs from 'fs';
+import process from 'process';
+
 console.log("Element AppImage Build")
 let pathToAppImage;
 if (process.env.APPIMAGE == null) {
@@ -23,7 +26,7 @@ MimeType=x-scheme-handler/element;`
 };
 
 
-exports.isAutoStartEnabled = function isAutoStartEnabled() {
+export function isAutoStartEnabled() {
     if (fs.existsSync(`${os.homedir()}/.config/autostart/element.desktop`)) {
         return true;
     } else {
@@ -31,7 +34,7 @@ exports.isAutoStartEnabled = function isAutoStartEnabled() {
     }    
 };
 
-exports.enableAutoStart = function enableAutoStart() {
+export function enableAutoStart() {
     fs.writeFile(
         `${os.homedir()}/.config/autostart/element.desktop`,
         getDesktopFile(pathToAppImage), 
@@ -42,14 +45,14 @@ exports.enableAutoStart = function enableAutoStart() {
     );
 };
 
-exports.disableAutoStart = function disableAutoStart() {
+export function disableAutoStart() {
     fs.unlink(`${os.homedir()}/.config/autostart/element.desktop`, (err) => {
         if(err) return console.log(err);
         console.log('file deleted successfully');
     })
 };
 
-if (exports.isAutoStartEnabled()) {
+if (isAutoStartEnabled()) {
     console.log("Updating autostart desktop file.");
-    exports.enableAutoStart();
+    enableAutoStart();
 }
