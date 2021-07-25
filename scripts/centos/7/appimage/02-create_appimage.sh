@@ -89,7 +89,7 @@ sed -i 's,docker run --rm -ti,docker run --rm,g' scripts/in-docker.sh
 yarn run fetch --noverify --cfgdir ''
 yarn run docker:setup
 
-cp $RT/*.js src/.
+cp $RT/*.ts src/.
 cp $RT/patch.sh .
 ./patch.sh
 
