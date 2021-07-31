@@ -36,16 +36,6 @@ jobs:
           name: element-${{ matrix.build_type }}
           path: '_dist'
 
-  release:
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - name: download actions
-        uses: actions/download-artifact@v2
-
-      - name: Show releases
-        run: ls -alHR
-      
       - name: Create release and upload artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -58,4 +48,4 @@ jobs:
           fi
           wget https://github.com/srevinsaju/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage
           chmod +x pyuploadtool-x86_64.AppImage
-          ./pyuploadtool-x86_64.AppImage element-*/*
+          ./pyuploadtool-x86_64.AppImage _dist/*.AppImage*
