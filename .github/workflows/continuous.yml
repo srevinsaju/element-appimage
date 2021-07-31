@@ -40,10 +40,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_CONTINUOUS_RELEASE_TAG: ${{ matrix.build_type }}
+          CHANGELOG_TYPE: conventional
         run: |
           if [[ "${{ matrix.build_type }}" == "develop" ]]; then
+            export GITHUB_CONTINUOUS_RELEASE_NAME=continuous
             export GITHUB_CONTINUOUS_RELEASE_TYPE=prerelease
+            export GITHUB_CONTINUOUS_RELEASE_TITLE="Continuous build"
           else
+            export GITHUB_CONTINUOUS_RELEASE_NAME="Stable build"
+            export GITHUB_CONTINUOUS_RELEASE_TAG=stable
             export GITHUB_CONTINUOUS_RELEASE_TYPE=stable
           fi
           wget https://github.com/srevinsaju/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage
