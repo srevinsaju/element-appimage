@@ -43,9 +43,9 @@ jobs:
           CHANGELOG_TYPE: conventional
         run: |
           if [[ "${{ matrix.build_type }}" == "develop" ]]; then
-            export GITHUB_CONTINUOUS_RELEASE_NAME=continuous
+            export GITHUB_CONTINUOUS_RELEASE_TAG=continuous
             export GITHUB_CONTINUOUS_RELEASE_TYPE=prerelease
-            export GITHUB_CONTINUOUS_RELEASE_TITLE="Continuous build"
+            export GITHUB_CONTINUOUS_RELEASE_NAME="Continuous build"
           else
             export GITHUB_CONTINUOUS_RELEASE_NAME="Stable build"
             export GITHUB_CONTINUOUS_RELEASE_TAG=stable
