@@ -115,7 +115,7 @@ sudo rm -rf Element*.AppImage
 #cp -L /lib64/libcrypto.so.10 squashfs-root/usr/lib/.
 #cp -L /lib64/libssl3.so squashfs-root/usr/lib/.
 #cp -L /lib64/libssl.so.10 squashfs-root/usr/lib/.
-./appimagetool-x86_64.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|element-appimage|continuous|Element*.AppImage.zsync' Element-`git describe --tags`-GLIBC-`ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]'`.AppImage
+./appimagetool-x86_64.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|element-appimage|continuous|Element*.AppImage.zsync' Element-`git describe --tags --always`.glibc`ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]'`.AppImage
 rm -r ./appimagetool-x86_64.AppImage
 chmod +x *.AppImage
 rm -rf squashfs-root
