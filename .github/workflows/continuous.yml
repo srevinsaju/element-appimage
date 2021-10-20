@@ -19,11 +19,18 @@ jobs:
     strategy:
       matrix:
         build_type: ['stable', 'develop']
+        arch: ['amd64', 'arm32v7']
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14
+
+      - name: Prepare Arm Docker container
+        if: matrix.arch == 'arm32v7'
+        run: |
+          cd scripts/arm
+          docker buildx build -t element-desktop-dockerbuild .
 
       - name: Build Element
         run: |
