@@ -1,16 +1,16 @@
-FROM arm64v8/buildpack-deps:xenial-curl
+FROM buildpack-deps:xenial-curl
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get -qq update && apt-get -qq dist-upgrade && \
   # add repo for git-lfs
-  curl -L https://github.com/git-lfs/git-lfs/releases/download/v3.0.1/git-lfs-linux-arm64-v3.0.1.tar.gz | tar -xvz && mv git-lfs /usr/bin/git-lfs && \
+  curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
   # git ssh for using as docker image on CircleCI
   # python for node-gyp
   # rpm is required for FPM to build rpm package
   # libsecret-1-dev and libgnome-keyring-dev are required even for prebuild keytar
-  apt-get -qq install --no-install-recommends qtbase5-dev bsdtar build-essential autoconf libssl-dev gcc-multilib g++-multilib lzip rpm python libcurl3 git ssh unzip \
+  apt-get -qq install --no-install-recommends qtbase5-dev bsdtar build-essential autoconf libssl-dev gcc-multilib g++-multilib lzip rpm python libcurl3 git git-lfs ssh unzip \
   libsecret-1-dev libgnome-keyring-dev \
   libopenjp2-tools \
   # Used by Seshat
