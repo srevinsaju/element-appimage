@@ -2,7 +2,7 @@ FROM arm32v7/buildpack-deps:xenial-curl
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN curl -L https://yarnpkg.com/latest.tar.gz | tar xvz && mv yarn-* /yarn && ln -s /yarn/bin/yarn /usr/bin/yarn
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get -qq update && apt-get -qq dist-upgrade && \
   # add repo for git-lfs
   curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
@@ -14,7 +14,9 @@ RUN apt-get -qq update && apt-get -qq dist-upgrade && \
   libsecret-1-dev libgnome-keyring-dev \
   libopenjp2-tools \
   # Used by Seshat
-  libsqlcipher-dev && \
+  libsqlcipher-dev \
+  # yarn from debs
+  yarn && \
   # git-lfs
   git lfs install && \
   apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/*
