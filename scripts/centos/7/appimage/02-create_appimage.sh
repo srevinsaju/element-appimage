@@ -88,7 +88,9 @@ yarn install
 
 sed -i 's,docker run --rm -ti,docker run --rm,g' scripts/in-docker.sh
 yarn run fetch --noverify --cfgdir ''
-yarn run docker:setup
+if [[ "$BUILD_ARCH" == "amd64" ]]; then
+  yarn run docker:setup
+fi
 
 cp $RT/*.ts src/.
 cp $RT/patch.sh .

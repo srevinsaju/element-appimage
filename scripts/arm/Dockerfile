@@ -1,4 +1,4 @@
-FROM arm32v7/buildpack-deps:xenial-curl
+FROM arm64v8/buildpack-deps:xenial-curl
 
 ENV DEBIAN_FRONTEND noninteractive
 
