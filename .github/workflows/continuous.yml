@@ -17,17 +17,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         build_type: ['stable', 'develop']
+        arch: ['amd64', 'arm64v8']
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14
 
+      - name: Prepare Arm Docker container
+        run: |
+          sudo apt install -y qemu-user-static binfmt-support
+          cd scripts/${{ matrix.arch }}
+          docker buildx build -t element-desktop-dockerbuild .
+
       - name: Build Element
         run: |
           export BUILD_TYPE="${{ matrix.build_type }}"
+          export BUILD_ARCH="${{ matrix.arch }}"
           bash -ex ./scripts/centos/7/appimage/02*.sh
 
       - name: Upload Appimage
