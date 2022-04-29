@@ -87,7 +87,16 @@ export ELEMENT_BUILD_VERSION="$(git describe --tags --always --match 'v*.*')"
 yarn install
 
 sed -i 's,docker run --rm -ti,docker run --rm,g' scripts/in-docker.sh
-yarn run fetch --noverify --cfgdir ''
+mkdir -p appimage_config
+pushd appimage_config
+if [[ "$BUILD_DEPS" == "stable" ]]; then 
+  wget https://app.element.io/config.json 
+else
+  wget https://develop.element.io/config.json
+fi
+popd
+
+yarn run fetch --noverify --cfgdir 'appimage_config'
 yarn run docker:setup
 
 cp $RT/*.ts src/.
