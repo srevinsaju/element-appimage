@@ -4,14 +4,14 @@ import fs from 'fs';
 // import process from 'process';
 
 console.log("Element AppImage Build")
-let pathToAppImage;
+let pathToAppImage: string;
 if (process.env.APPIMAGE == null) {
     pathToAppImage = "element-desktop";
 } else {
     pathToAppImage = process.env.APPIMAGE;
 };
 
-function getDesktopFile(path) {
+function getDesktopFile(path: string) {
     return `[Desktop Entry]
 Name=Element
 Comment=A feature-rich client for Matrix
