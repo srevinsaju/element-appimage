@@ -77,10 +77,10 @@ cd "$RT/_build"
 
 status "Cloning Element Desktop"
 
-git clone https://github.com/vector-im/element-desktop
+git clone https://github.com/element-hq/element-desktop
 cd element-desktop
 if [[ "$BUILD_TYPE" == "stable" ]]; then
-    git checkout `curl --silent -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/vector-im/element-desktop/releases/latest | jq  -r '.tag_name'`
+    git checkout `curl --silent -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/element-hq/element-desktop/releases/latest | jq  -r '.tag_name'`
 fi
 git describe --tags --always --match "v*.*"
 export ELEMENT_BUILD_VERSION="$(git describe --tags --always --match 'v*.*')"
