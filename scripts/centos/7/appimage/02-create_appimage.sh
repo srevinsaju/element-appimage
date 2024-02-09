@@ -3,7 +3,7 @@
 set -eux 
 
 
-export NODE_VERSION="16.x"
+export NODE_VERSION="20.x"
 export SQLCIPHER_VERSION="4.4.3"
 export APPIMAGE_EXTRACT_AND_RUN=1
 
@@ -50,15 +50,15 @@ cd "$RT/_deps"
 
 cd "$RT"
 
-#curl --silent --location https://rpm.nodesource.com/setup_$NODE_VERSION | sudo bash -
-#sudo yum -y install nodejs
-#curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-#sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
-#sudo yum -y install yarn
-#yarn --version
-#node --version
-#sudo yarn global add neon-cli
-#neon version
+curl -fsSL https://rpm.nodesource.com/setup_$NODE_VERSION | sudo bash -
+sudo yum -y install nodejs
+curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+sudo yum -y install yarn
+yarn --version
+node --version
+sudo yarn global add neon-cli
+neon version
 
 
 cd "$RT"
