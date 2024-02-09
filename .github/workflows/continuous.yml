@@ -28,7 +28,7 @@ jobs:
       - name: Build Element
         run: |
           export BUILD_TYPE="${{ matrix.build_type }}"
-          bash -ex ./scripts/centos/7/appimage/02*.sh
+          bash -ex ./scripts/appimage/02*.sh
 
       - name: Upload Appimage
         uses: actions/upload-artifact@v1
