@@ -2,9 +2,6 @@
 
 set -eux 
 
-
-export NODE_VERSION="20.x"
-export SQLCIPHER_VERSION="4.4.3"
 export APPIMAGE_EXTRACT_AND_RUN=1
 
 if [ -z ${BUILD_DEPS+x} ]
@@ -29,49 +26,6 @@ status () {
 }
 
 export RT="$PWD"
-
-
-cd "$RT/_deps"
-
-#if ! command -v sqlcipher &> /dev/null || [[ "$BUILD_DEPS" == "false" ]]
-#then
-#    status "Setting up sqlcipher"
-#
-#    # clone the source code of sqlcipher
-#    git clone https://github.com/sqlcipher/sqlcipher
-#    cd sqlcipher
-#    git checkout "v$SQLCIPHER_VERSION"
-#    ./configure --prefix=/usr --enable-tempstore=yes \
-#        CFLAGS="-DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
-#    make
-#    DESTDIR=/usr sudo make install
-#fi
-
-
-cd "$RT"
-
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - &&\
-sudo apt-get install -y nodejs
-#curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-#sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
-#sudo yum -y install yarn
-#yarn --version
-#node --version
-#sudo yarn global add neon-cli
-#neon version
-
-
-cd "$RT"
-
-
-status "Setting up Rust"
-curl https://sh.rustup.rs -sSf | sh -s -- -y -q
-export PATH=$PATH:$HOME/.cargo/bin
-cargo --version
-rustc --version
-source $HOME/.cargo/env
-
-
 
 cd "$RT/_build"
 
