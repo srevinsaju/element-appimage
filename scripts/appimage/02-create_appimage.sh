@@ -51,12 +51,12 @@ fi
 popd
 
 yarn run fetch --noverify --cfgdir 'appimage_config'
-yarn run docker:setup
 
 cp $RT/*.ts src/.
 cp $RT/patch.sh .
 ./patch.sh
 
+yarn run docker:setup
 yarn run docker:install < /dev/null
 yarn run docker:build:native
 yarn run docker:build
