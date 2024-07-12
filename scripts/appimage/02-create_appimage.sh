@@ -43,7 +43,7 @@ yarn install
 sed -i 's,docker run --rm -ti,docker run --rm,g' scripts/in-docker.sh
 mkdir -p appimage_config
 pushd appimage_config
-if [[ "$BUILD_DEPS" == "stable" ]]; then 
+if [[ "$BUILD_TYPE" == "stable" ]]; then 
   wget https://app.element.io/config.json 
 else
   wget https://develop.element.io/config.json
