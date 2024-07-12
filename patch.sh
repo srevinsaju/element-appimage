@@ -12,3 +12,6 @@ if ! grep -q WORKDIR dockerbuild/Dockerfile
 then
   echo 'WORKDIR /project' >> dockerbuild/Dockerfile
 fi
+
+# use Node 20 LTS on docker image
+sed -i 's,NODE_VERSION 18.19.*,NODE_VERSION 20.15.1,g' dockerbuild/Dockerfile
