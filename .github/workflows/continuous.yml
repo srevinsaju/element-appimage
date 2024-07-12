@@ -31,7 +31,7 @@ jobs:
           bash -ex ./scripts/appimage/02*.sh
 
       - name: Upload Appimage
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: element-${{ matrix.build_type }}
           path: '_dist'
