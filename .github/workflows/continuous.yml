@@ -17,40 +17,71 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         build_type: ['stable', 'develop']
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Build Element
+      - name: Check version
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export BUILD_TYPE="${{ matrix.build_type }}"
-          bash -ex ./scripts/appimage/02*.sh
+          mkdir -p _build
+          cd _build
+          git clone https://github.com/element-hq/element-desktop
+          cd element-desktop
+          if [[ "$BUILD_TYPE" == "stable" ]]; then
+              git checkout `curl --silent -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/element-hq/element-desktop/releases/latest | jq  -r '.tag_name'`
+          fi
+          export ELEMENT_VERSION=$(git describe --tags --always --match "v*.*")
+          cd -
+
+          if [[ "$BUILD_TYPE" == "develop" ]]; then
+            export GITHUB_CONTINUOUS_RELEASE_TAG=continuous
+            export GITHUB_CONTINUOUS_RELEASE_TYPE=prerelease
+            export GITHUB_CONTINUOUS_RELEASE_NAME="Continuous build"
+          else
+            export GITHUB_CONTINUOUS_RELEASE_NAME=${ELEMENT_VERSION}
+            export GITHUB_CONTINUOUS_RELEASE_TAG=${ELEMENT_VERSION}
+            export GITHUB_CONTINUOUS_RELEASE_TYPE=stable
+          fi
+
+          echo "Looking for version ${ELEMENT_VERSION} in release ${GITHUB_CONTINUOUS_RELEASE_TAG}"
+          if [ $(gh release view $GITHUB_CONTINUOUS_RELEASE_TAG 2>&1 | grep ${ELEMENT_VERSION} |wc -l) -gt 1 ]; then
+            echo "Artifact already done, skip build."
+            export SKIP_BUILD=true
+          fi
+
+          echo "SKIP_BUILD=${SKIP_BUILD:false}" >> "$GITHUB_ENV"
+          echo "BUILD_TYPE=${BUILD_TYPE}" >> "$GITHUB_ENV"
+          echo "ELEMENT_VERSION=${ELEMENT_VERSION}" >> "$GITHUB_ENV"
+          echo "GITHUB_CONTINUOUS_RELEASE_TAG=${GITHUB_CONTINUOUS_RELEASE_TAG}" >> "$GITHUB_ENV"
+          echo "GITHUB_CONTINUOUS_RELEASE_TYPE=${GITHUB_CONTINUOUS_RELEASE_TYPE}" >> "$GITHUB_ENV"
+          echo "GITHUB_CONTINUOUS_RELEASE_NAME=${GITHUB_CONTINUOUS_RELEASE_NAME}" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-node@v4
+        if: ${{ env.SKIP_BUILD != 'true' }}
+        with:
+          node-version-file: "_build/element-desktop/.node-version"
+      - name: Build Element
+        if: ${{ env.SKIP_BUILD != 'true' }}
+        run: |
+          bash -ex ./scripts/appimage/02-create_appimage.sh
 
       - name: Upload Appimage
+        if: ${{ env.SKIP_BUILD != 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: element-${{ matrix.build_type }}
           path: '_dist'
 
       - name: Create release and upload artifacts
+        if: ${{ env.SKIP_BUILD != 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_CONTINUOUS_RELEASE_TAG: ${{ matrix.build_type }}
           CHANGELOG_TYPE: conventional
         run: |
-          if [[ "${{ matrix.build_type }}" == "develop" ]]; then
-            export GITHUB_CONTINUOUS_RELEASE_TAG=continuous
-            export GITHUB_CONTINUOUS_RELEASE_TYPE=prerelease
-            export GITHUB_CONTINUOUS_RELEASE_NAME="Continuous build"
-          else
-            export GITHUB_CONTINUOUS_RELEASE_NAME="Stable build"
-            export GITHUB_CONTINUOUS_RELEASE_TAG=stable
-            export GITHUB_CONTINUOUS_RELEASE_TYPE=stable
-          fi
           wget https://github.com/srevinsaju/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage
           chmod +x pyuploadtool-x86_64.AppImage
           APPIMAGE_EXTRACT_AND_RUN=1 ./pyuploadtool-x86_64.AppImage _dist/*.AppImage*
